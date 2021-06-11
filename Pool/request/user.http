@@ -1,0 +1,27 @@
+
+POST https://localhost:5001/User
+Content-Type: application/json
+
+{
+    "name": "Rubi Flores",
+    "email":"perlita@gmail.com",
+    "username":"rubi",
+    "password":"123"
+}
+###
+GET https://localhost:5001/User/60c2c150d560b00845e3ab5f
+
+###
+PUT https://localhost:5001/User
+Content-Type: application/json
+
+{
+    "id": "60c2c150d560b00845e3ab5f",
+    "name": "Barry Allen",
+    "email":"barry@hotmail.com",
+    "username":"theflash",
+    "password":"000"
+}
+
+###
+DELETE https://localhost:5001/User/60c397150b73f7dbdb851182

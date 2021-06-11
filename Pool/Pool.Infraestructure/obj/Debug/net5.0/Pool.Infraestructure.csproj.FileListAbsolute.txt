@@ -1,0 +1,15 @@
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\bin\Debug\net5.0\Pool.Infraestructure.deps.json
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\bin\Debug\net5.0\Pool.Infraestructure.dll
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\bin\Debug\net5.0\ref\Pool.Infraestructure.dll
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\bin\Debug\net5.0\Pool.Infraestructure.pdb
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\obj\Debug\net5.0\Pool.Infraestructure.csprojAssemblyReference.cache
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\obj\Debug\net5.0\Pool.Infraestructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\obj\Debug\net5.0\Pool.Infraestructure.AssemblyInfoInputs.cache
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\obj\Debug\net5.0\Pool.Infraestructure.AssemblyInfo.cs
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\obj\Debug\net5.0\Pool.Infraestructure.csproj.CoreCompileInputs.cache
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\obj\Debug\net5.0\Pool.Infraestructure.dll
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\obj\Debug\net5.0\ref\Pool.Infraestructure.dll
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\obj\Debug\net5.0\Pool.Infraestructure.pdb
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\bin\Debug\net5.0\Pool.Core.dll
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\bin\Debug\net5.0\Pool.Core.pdb
+C:\Users\frank\Desktop\web\Pool\Pool.Infraestructure\obj\Debug\net5.0\Pool.Infraestructure.csproj.CopyComplete
