@@ -19,12 +19,19 @@ namespace Pool.Infraestructure.Data
             _poolplace = db.GetCollection<Poolplace>("PoolSwimm");
         }
 
-        // retornar un usuario
+        public List<User> TraerUsuarios()
+        {
+            return _user.Find(u => true).ToList();
+        }
         public User TraerUsuarioId(string id)
         {
             return _user.Find(u => u.Id == id).SingleOrDefault();
         }
-
+        public User LogInUser(string pass, string user)
+        {
+            string passEncript = EncriptarPassword(pass);
+            return _user.Find(u => u.Username == user && u.Password == passEncript).SingleOrDefault();
+        }
         public User CreateUser(User user)
         {
             User u = new User();
@@ -36,12 +43,10 @@ namespace Pool.Infraestructure.Data
             _user.InsertOne(u);
             return u;
         }
-
         public void UpdateUser(string id, User user)
         {
             _user.ReplaceOne(u => u.Id == id, user);
         }
-
         public void DeleteUser(string id)
         {
             _user.DeleteOne(u => u.Id == id);
@@ -60,10 +65,26 @@ namespace Pool.Infraestructure.Data
 
         // ==============================================================
 
-        public Poolplace TraerPoolId(string id)
+        public List<Poolplace> TraerPoolId(string id)
         {
-            return _poolplace.Find(u => u.Id == id).SingleOrDefault();
+            return _poolplace.Find(u => u.Id == id).ToList();
         }
 
+        public Poolplace CreateNewPool(Poolplace pool)
+        {
+            _poolplace.InsertOne(pool);
+            return pool;
+        }
+
+        public Poolplace UpdatePool(Poolplace pool)
+        {
+            _poolplace.ReplaceOne(u => u.Id == pool.Id, pool);
+            return pool;
+        }
+
+        public void DeletePool(string id)
+        {
+            _poolplace.DeleteOne(u => u.Id == id);
+        }
     }
 }

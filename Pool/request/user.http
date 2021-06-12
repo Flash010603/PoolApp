@@ -1,4 +1,7 @@
 
+POST https://localhost:5001/User/rubi&123
+
+###
 POST https://localhost:5001/User
 Content-Type: application/json
 
