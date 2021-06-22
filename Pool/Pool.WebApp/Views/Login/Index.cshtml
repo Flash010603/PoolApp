@@ -1,0 +1,83 @@
+﻿
+@model Pool.WebApp.Models.LoginModel 
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/login.css" />
+    <title>Login || Pool</title>
+</head>
+<body>
+
+
+    <div class="grid_login">
+        <div class="row">
+            <div class="col-12 mx-auto mt-2 error">
+
+            </div>
+        </div>
+
+        @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+        {
+            <div class="box login">
+                <h3>Login</h3>
+
+                <div class="login_form">
+
+                    <div class="item_form">
+                        <label class="label" for="">Username</label>
+                        <div class="input">
+                            <div class="icono"><i class="fas fa-user"></i></div>
+                            @Html.TextBoxFor(d => d.Username, "", new { @class = "inputitem", @placeholder = "Ingresa tu usuario", @name = "user" })
+                        </div>
+                    </div>
+
+                    <div class="item_form">
+                        <label class="label" for="">Contrseña</label>
+                        <div class="input">
+                            <div class="icono"><i class="fas fa-lock"></i></div>
+                            @Html.TextBoxFor(d => d.Password, "", new { @class = "inputitem", @type = "password", @placeholder = "Ingresa tu contraseña", @name = "password" })
+                        </div>
+                    </div>
+
+
+                    <button class="btn_login btn_rela"><p class="m-0">Ingresar</p> <i class="fas fa-sign-in-alt"></i></button>
+                </div>
+
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-12 mx-auto mt-2">
+                <p class="alert alert-dark text-center fw-bold  m-0">Aun no tienes cuenta  @Html.ActionLink("Crear una cuneta", "Index", "Crear")</p>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/5fa83d646f.js"></script>
+    <script>
+
+         document.addEventListener("DOMContentLoaded", () => {
+             var text = '@ViewData["error"]';
+
+         if (text != "") {
+             document.querySelector(".error").innerHTML = `
+                <p class="alert alert-danger text-center fw-bold  m-0 mb-2">Error en el usuario y/o contraseña</p>
+                `
+         } else {
+             document.querySelector(".error").innerHTML = "";
+
+         }
+         })
+
+    </script>
+
+</body>

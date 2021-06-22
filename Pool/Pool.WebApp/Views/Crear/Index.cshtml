@@ -1,0 +1,67 @@
+﻿@model Pool.WebApp.Models.NewUser
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="~/css/login.css" />
+    <title>Crear cuenta|| Pool</title>
+</head>
+<body>
+
+
+   
+    <div class="grid_login">
+
+        @using (Html.BeginForm("Index", "Crear", FormMethod.Post))
+        {
+            <div class="box create">
+                <h3>Crear usuario</h3>
+                <div class="login_form">
+
+                    <div class="item_form">
+                        <label class="label" for="">Nombre</label>
+                        <div class="input">
+                            <div class="icono"><i class="fas fa-user"></i></div>
+
+                            @Html.TextBoxFor(e => e.Name, "", new { @class = "inputitem", @placeholder = "Ingresa tu nombre completo" })
+                        </div>
+                    </div>
+
+                    <div class="item_form">
+                        <label class="label" for="">Username</label>
+                        <div class="input">
+                            <div class="icono"><i class="fas fa-user"></i></div>
+
+                            @Html.TextBoxFor(e => e.Username, "", new { @class = "inputitem", @placeholder = "Ingresa tu usuario" })
+                        </div>
+                    </div>
+
+                    <div class="item_form">
+                        <label class="label" for="">Contrseña</label>
+                        <div class="input">
+                            <div class="icono"><i class="fas fa-lock"></i></div>
+                            @Html.TextBoxFor(d => d.Password, "", new { @class = "inputitem", @type = "password", @placeholder = "Ingresa tu contraseña" })
+                        </div>
+                    </div>
+
+                    <div class="item_form">
+                        <label class="label" for="">Correo electronico</label>
+                        <div class="input">
+                            <div class="icono"><i class="fas fa-envelope"></i></div>
+
+                            @Html.TextBoxFor(d => d.Email, "", new { @class = "inputitem", @placeholder = "Ingresa tu correo" })
+                        </div>
+                    </div>
+
+                    <button class="btn_login"><p class="m-0">Crear cuenta</p> <i class="fas fa-user-circle"></i></button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <script src="https://kit.fontawesome.com/5fa83d646f.js"></script>
+
+
+</body>

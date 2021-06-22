@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="configuracion.css" />
+    <title>Config</title>
+  </head>
+  <body>
+    <nav>
+      <div class="logo">
+        <h1>Logo</h1>
+      </div>
+
+      <div class="items_menu">
+        <a href="" class="active">Home</a>
+        <a href="">Configuración</a>
+        <a href="">Cuenta</a>
+      </div>
+
+      <div class="cont_btn">
+        <button>Salir <i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </nav>
+
+    <div class="contenedor">
+      <h2 class="title_con">Formulario de configuracion</h2>
+      <form action="">
+        <label for="" class="subtitle_config">Tipo de dato</label>
+
+        <div class="input">
+          <div class="icono"><i class="fas fa-temperature-low"></i></div>
+          <select>
+            <option value="0">--- Seleccione una opcion ---</option>
+            <option value="F">Faren</option>
+            <option value="K">Kelvin</option>
+            <option value="C">Celcius</option>
+          </select>
+        </div>
+
+        <label for="" class="subtitle_config">Temperatura</label>
+
+
+          <div class="input">
+            <div class="icono"><i class="fas fa-thermometer-quarter"></i></div>
+            <input type="number" name="" id="" placeholder="min temp" />
+          </div>
+
+          <div class="input">
+            <div class="icono"><i class="fas fa-thermometer-three-quarters"></i></div>
+            <input type="number" name="" id="" placeholder="max temp" />
+          </div>
+        
+        
+       
+
+        <label for="" class="subtitle_config">pH</label>
+
+        <div class="input">
+          <div class="icono"><i class="fas fa-tint"></i></div>
+          <input type="number" name="" id="" placeholder="max pH" min="-7" max="7"/>
+        </div>
+
+        <div class="input">
+          <div class="icono"><i class="fas fa-tint"></i></div>
+          <input type="number" name="" id="" placeholder="min pH" min="-7" max="7"/>
+        </div>
+
+
+        <label for="" class="subtitle_config">Datos de la piscina</label>
+
+        <div class="input">
+          <div class="icono"><i class="fas fa-swimming-pool"></i></div>
+          <input type="text" placeholder="Cambiar el nombre" />
+        </div>
+
+        <div class="input">
+          <div class="icono"><i class="fas fa-map-marker-alt"></i></div>
+          <input type="text" placeholder="Cambiar locacion" />
+        </div>
+
+
+        <button class="btn_Save">Guardar configuracion <i class="fas fa-save"></i></button>
+      </form>
+    </div>
+
+    <div class="area">
+      <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <script src="https://kit.fontawesome.com/5fa83d646f.js"></script>
+  </body>
+</html>

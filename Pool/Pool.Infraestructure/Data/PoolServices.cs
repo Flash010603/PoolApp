@@ -10,6 +10,7 @@ namespace Pool.Infraestructure.Data
     {
         private IMongoCollection<User> _user;
         private IMongoCollection<Poolplace> _poolplace;
+        private IMongoCollection<DataTable> _datatable;
 
         public PoolServices(IPoolSettings settings)
         {
@@ -17,6 +18,7 @@ namespace Pool.Infraestructure.Data
             var db = client.GetDatabase(settings.Database);
             _user = db.GetCollection<User>("User");
             _poolplace = db.GetCollection<Poolplace>("PoolSwimm");
+            _datatable = db.GetCollection<DataTable>("DataTable");
         }
 
         public List<User> TraerUsuarios()
@@ -63,11 +65,16 @@ namespace Pool.Infraestructure.Data
             return sb.ToString();
         }
 
-        // ==============================================================
+        // ===================== Pool Swim =============================
 
         public List<Poolplace> TraerPoolId(string id)
         {
             return _poolplace.Find(u => u.Id == id).ToList();
+        }
+
+        public Poolplace TraerPoolIdUsuario(string id)
+        {
+            return _poolplace.Find(u => u.IdUser == id).SingleOrDefault();
         }
 
         public Poolplace CreateNewPool(Poolplace pool)
@@ -85,6 +92,27 @@ namespace Pool.Infraestructure.Data
         public void DeletePool(string id)
         {
             _poolplace.DeleteOne(u => u.Id == id);
+        }
+
+        // ===================== Data table =============================
+        public List<DataTable> TraerDataTable()
+        {
+            return _datatable.Find(u => true).ToList();
+        }
+
+        public DataTable CreateDataTable(DataTable dt)
+        {
+            DataTable data = new DataTable();
+            
+            data.Fecha = dt.Fecha;
+            data.Temp_max = dt.Temp_max;
+            data.Temp_min = dt.Temp_min;
+            data.Ph_max = dt.Ph_max;            
+            data.Ph_min = dt.Ph_min;            
+            data.IdUser = dt.IdUser;
+
+            _datatable.InsertOne(data);
+            return data;
         }
     }
 }
