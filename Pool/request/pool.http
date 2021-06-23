@@ -2,24 +2,21 @@ POST https://localhost:5001/Pool
 Content-Type: application/json
 
 {
-    "name_Pool": "Piscina de los super campeones",
-    "location":"Monterrey, Nuevo Leon",
+    "name_Pool": "Dragon Club",
+    "location":"Real de palmas",
     "temp_min":18.5,
     "temp_max":40.5,
     "temp_current":20,
     "ph_min":3,
     "ph_max":10,
     "ph_current":7,
-    "grados": "c",
-    "idUser":"60c3978a0c1d417146b5572a"
+    "grados": "f",
+    "idUser":"60d378a5b55bd4028994fb27"
 }
-
 ###
-GET https://localhost:5001/Pool/60d0a06e32573e8eba847af3
-
+GET https://localhost:5001/Pool/60d0af52924a9f2376b2396d
 ###
-GET https://localhost:5001/Pool/user/60c3978a0c1d417146b5572a
-
+GET https://localhost:5001/Pool/user/60d378a5b55bd4028994fb27
 ###
 PUT https://localhost:5001/Pool
 Content-Type: application/json
@@ -37,6 +34,5 @@ Content-Type: application/json
     "grados": "f",
     "idUser":"60c3978a0c1d417146b5572a"
 }
-
 ###
 DELETE  https://localhost:5001/Pool/60d0a9b7ba320d68ba2a7dd7

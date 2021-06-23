@@ -1,0 +1,14 @@
+POST https://localhost:5001/Table
+Content-Type: application/json
+
+{
+    "fecha": "23-06-2021",
+    "temp_min_register":18.5,
+    "temp_max_register":40.5,
+    "ph_min_register":3,
+    "ph_max_register":10,
+    "idUser":"60c3978a0c1d417146b5572a"
+}
+
+###
+GET https://localhost:5001/Table/60c3978a0c1d41746b5572a

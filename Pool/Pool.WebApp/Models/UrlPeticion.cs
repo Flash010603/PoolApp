@@ -9,6 +9,7 @@ namespace Pool.WebApp.Models
     {
         public string url_user = "https://localhost:5001/user";
         public string url_pool = "https://localhost:5001/pool";
+        public string url_table= "https://localhost:5001/table";
         public UrlPeticion()
         {
 

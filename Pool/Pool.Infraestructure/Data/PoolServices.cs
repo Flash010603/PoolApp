@@ -67,14 +67,14 @@ namespace Pool.Infraestructure.Data
 
         // ===================== Pool Swim =============================
 
-        public List<Poolplace> TraerPoolId(string id)
+        public Poolplace TraerPoolId(string id)
         {
-            return _poolplace.Find(u => u.Id == id).ToList();
+            return _poolplace.Find(u => u.Id == id).SingleOrDefault();
         }
 
-        public Poolplace TraerPoolIdUsuario(string id)
+        public List<Poolplace> TraerPoolIdUsuario(string id)
         {
-            return _poolplace.Find(u => u.IdUser == id).SingleOrDefault();
+            return _poolplace.Find(u => u.IdUser == id).ToList();
         }
 
         public Poolplace CreateNewPool(Poolplace pool)
@@ -95,9 +95,9 @@ namespace Pool.Infraestructure.Data
         }
 
         // ===================== Data table =============================
-        public List<DataTable> TraerDataTable()
+        public List<DataTable> TraerDataTable(string id)
         {
-            return _datatable.Find(u => true).ToList();
+            return _datatable.Find(u => u.IdUser == id).ToList();
         }
 
         public DataTable CreateDataTable(DataTable dt)
@@ -105,10 +105,10 @@ namespace Pool.Infraestructure.Data
             DataTable data = new DataTable();
             
             data.Fecha = dt.Fecha;
-            data.Temp_max = dt.Temp_max;
-            data.Temp_min = dt.Temp_min;
-            data.Ph_max = dt.Ph_max;            
-            data.Ph_min = dt.Ph_min;            
+            data.Temp_max_register = dt.Temp_max_register;
+            data.Temp_min_register = dt.Temp_min_register;
+            data.Ph_max_register = dt.Ph_max_register;            
+            data.Ph_min_register = dt.Ph_min_register;            
             data.IdUser = dt.IdUser;
 
             _datatable.InsertOne(data);

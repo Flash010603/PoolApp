@@ -31,90 +31,105 @@
     </nav>
 
     <div class="contenedor">
+        @{
+            if (!ViewBag.ExistsData)
+            {
+                <div class="container">
+                    <div class="row">
+                        <div class="col-7 mx-auto mt-5 text-white text-center">
+                            <p class="display-4 fw-bold">No hay una piscina registrada</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <h2 class="title_con">Formulario de configuracion</h2>
+                @using (Html.BeginForm("Guardar", "Config", FormMethod.Post))
+                {
+
+                    <label for="" class="subtitle_config">Tipo de dato</label>
+                    <p class="m-0">Usted selecciono: @ViewBag.Grados</p>
+                    <div class="input">
+                        <div class="icono"><i class="fas fa-temperature-low"></i></div>
+                        @{
+                            List<SelectListItem> listItems = new List<SelectListItem>();
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "Celsius",
+                                Value = "c",
+                                Selected = true
+                            });
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "Fahrenheit",
+                                Value = "f",
+
+                            });
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = "Kelvin",
+                                Value = "k"
+                            });
+                        }
+
+                        @Html.DropDownListFor(model => model.Grados, listItems, "-- Select Status --", new { @class = "select" });
+
+
+                    </div>
+
+                    <label for="" class="subtitle_config">Temperatura</label>
+
+                    <p class="m-0">Usted selecciono: @ViewBag.Temp_min</p>
+                    <div class="input">
+                        <div class="icono"><i class="fas fa-thermometer-quarter"></i></div>
+                        @Html.TextBoxFor(d => d.Temp_min, "", new { @class = "inputitem", @type = "number", @placeholder = "Temperatura minima", @value = ViewBag.Temp_min })
+                    </div>
+                    <p class="m-0">Usted selecciono: @ViewBag.Temp_min</p>
+                    <div class="input">
+                        <div class="icono"><i class="fas fa-thermometer-three-quarters"></i></div>
+                        @Html.TextBoxFor(d => d.Temp_max, "", new { @class = "inputitem", @type = "number", @placeholder = "Temperatura maxima" })
+                    </div>
 
 
 
-        <h2 class="title_con">Formulario de configuracion</h2>
-        @using (Html.BeginForm("Guardar", "Config", FormMethod.Post))
-        {
 
-            <label for="" class="subtitle_config">Tipo de dato</label>
-            <p class="m-0" >Usted selecciono: @ViewBag.Grados</p>
-            <div class="input">
-                <div class="icono"><i class="fas fa-temperature-low"></i></div>
-                @{
-                    List<SelectListItem> listItems = new List<SelectListItem>();
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "Celsius",
-                        Value = "c",
-                        Selected = true
-                    });
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "Fahrenheit",
-                        Value = "f",
+                    <label for="" class="subtitle_config">pH</label>
+                    <p class="m-0">Usted selecciono: @ViewBag.Ph_min</p>
+                    <div class="input">
+                        <div class="icono"><i class="fas fa-tint"></i></div>
+                        @Html.TextBoxFor(d => d.Ph_min, "", new { @class = "inputitem", @type = "number", @placeholder = "pH minimo", @min = "-7", @max = "7" })
+                    </div>
+                    <p class="m-0">Usted selecciono: @ViewBag.Ph_max</p>
+                    <div class="input">
+                        <div class="icono"><i class="fas fa-tint"></i></div>
+                        @Html.TextBoxFor(d => d.Ph_max, "", new { @class = "inputitem", @type = "number", @placeholder = "pH minimo", @min = "-7", @max = "7" })
+                    </div>
 
-                    });
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "Kelvin",
-                        Value = "k"
-                    });
+
+                    <label for="" class="subtitle_config">Datos de la piscina</label>
+
+                    <p class="m-0">Usted selecciono: @ViewBag.PoolName</p>
+                    <div class="input">
+                        <div class="icono"><i class="fas fa-swimming-pool"></i></div>
+                        @Html.TextBoxFor(d => d.Name_Pool, "", new { @class = "inputitem", @type = "text", @placeholder = "Nombre de la piscina" })
+                    </div>
+
+                    <p class="m-0">Usted selecciono: @ViewBag.Location</p>
+                    <div class="input">
+                        <div class="icono"><i class="fas fa-map-marker-alt"></i></div>
+                        @Html.TextBoxFor(d => d.Location, "", new { @class = "inputitem", @type = "text", @placeholder = "Locación de la piscina" })
+                    </div>
+
+
+                    <button class="btn_Save">Guardar configuracion <i class="fas fa-save"></i></button>
+
                 }
-
-                @Html.DropDownListFor(model => model.Grados, listItems, "-- Select Status --", new { @class = "select" });
-
-
-            </div>
-
-            <label for="" class="subtitle_config">Temperatura</label>
-
-            <p class="m-0">Usted selecciono: @ViewBag.Temp_min</p>
-            <div class="input">
-                <div class="icono"><i class="fas fa-thermometer-quarter"></i></div>
-                @Html.TextBoxFor(d => d.Temp_min, "", new { @class = "inputitem", @type = "number", @placeholder = "Temperatura minima", @value = ViewBag.Temp_min })
-            </div>
-            <p class="m-0">Usted selecciono: @ViewBag.Temp_min</p>
-            <div class="input">
-                <div class="icono"><i class="fas fa-thermometer-three-quarters"></i></div>
-                @Html.TextBoxFor(d => d.Temp_max, "", new { @class = "inputitem", @type = "number", @placeholder = "Temperatura maxima" })
-            </div>
-
-
-
-
-            <label for="" class="subtitle_config">pH</label>
-            <p class="m-0">Usted selecciono: @ViewBag.Ph_min</p>
-            <div class="input">
-                <div class="icono"><i class="fas fa-tint"></i></div>
-                @Html.TextBoxFor(d => d.Ph_min, "", new { @class = "inputitem", @type = "number", @placeholder = "pH minimo", @min = "-7", @max = "7" })
-            </div>
-            <p class="m-0">Usted selecciono: @ViewBag.Ph_max</p>
-            <div class="input">
-                <div class="icono"><i class="fas fa-tint"></i></div>
-                @Html.TextBoxFor(d => d.Ph_max, "", new { @class = "inputitem", @type = "number", @placeholder = "pH minimo", @min = "-7", @max = "7" })
-            </div>
-
-
-            <label for="" class="subtitle_config">Datos de la piscina</label>
-
-            <p class="m-0">Usted selecciono: @ViewBag.PoolName</p>
-            <div class="input">
-                <div class="icono"><i class="fas fa-swimming-pool"></i></div>
-                @Html.TextBoxFor(d => d.Name_Pool, "", new { @class = "inputitem", @type = "text", @placeholder = "Nombre de la piscina" })
-            </div>
-
-            <p class="m-0">Usted selecciono: @ViewBag.Location</p>
-            <div class="input">
-                <div class="icono"><i class="fas fa-map-marker-alt"></i></div>
-                @Html.TextBoxFor(d => d.Location, "", new { @class = "inputitem", @type = "text", @placeholder = "Locación de la piscina" })
-            </div>
-
-
-            <button class="btn_Save">Guardar configuracion <i class="fas fa-save"></i></button>
-
+            }
         }
+
+
+
     </div>
 
     <div class="area">

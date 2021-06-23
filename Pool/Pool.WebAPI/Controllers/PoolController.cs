@@ -17,12 +17,12 @@ namespace Pool.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<List<Poolplace>> GetPoolById(string id){
+        public ActionResult<Poolplace> GetPoolById(string id){
             return _poolServices.TraerPoolId(id);
         }
 
         [HttpGet("user/{id}")]
-        public ActionResult<Poolplace> GetPoolByUser(string id){
+        public ActionResult<List<Poolplace>> GetPoolByUser(string id){
             return _poolServices.TraerPoolIdUsuario(id);
         }
 

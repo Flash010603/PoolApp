@@ -16,9 +16,9 @@ namespace Pool.WebAPI.Controllers
             _poolServices = poolServices;
         }
 
-        [HttpGet]
-         public ActionResult<List<DataTable>> GetDataTable(){
-            return _poolServices.TraerDataTable();
+        [HttpGet("{id}")]
+         public ActionResult<List<DataTable>> GetDataTable(string id){
+            return _poolServices.TraerDataTable(id);
         }
 
         [HttpPost]

@@ -33,11 +33,8 @@
         <div class="row mb-5">
             <div class="col text-white">
                 <h2 class="text-center my-5">Tabla de registro de informacion</h2>
-                <p class="m-0">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
-                    aspernatur, eum, nam minus sequi qui maxime iusto adipisci a dolores
-                    vel perspiciatis sint doloremque error totam velit, libero odit
-                    alias.
+                <p class="m-0 text-center">
+                    Tabla donde se registran los datos de la temperatura y el nivel de pH del agua para mantener un registro cada 24 horas 
                 </p>
             </div>
         </div>
@@ -52,21 +49,8 @@
                     <th scope="col" class="text-warning">pH max</th>
                 </tr>
             </thead>
-            <tbody class="text-center">
-                <tr>
-                    <td scope="row">20-06-2021</td>
-                    <td>13</td>
-                    <td>14</td>
-                    <td>7</td>
-                    <td>7</td>
-                </tr>
-                <tr>
-                    <td scope="row">20-06-2021</td>
-                    <td>13</td>
-                    <td>14</td>
-                    <td>7</td>
-                    <td>7</td>
-                </tr>
+            <tbody class="text-center" id="tbody">
+                
             </tbody>
         </table>
     </div>
@@ -86,4 +70,41 @@
         </ul>
     </div>
     <script src="https://kit.fontawesome.com/5fa83d646f.js"></script>
+    <script>
+
+        const tbody = document.getElementById('tbody');
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            rellenarTabla();
+
+        });
+
+        const rellenarTabla = async() => {
+
+            const url = '@ViewBag.UrlTabla';
+            console.log(url);
+            const res = await fetch(url);
+            const data = await res.json();
+            console.log(data);
+            let html = "";
+
+            for (let i = 0; i<=data.length-1;i++) {
+                html += `
+                <tr>
+                    <td scope="row">${data[i].fecha}</td>
+                    <td>${data[i].temp_min_register}</td>
+                    <td>${data[i].temp_max_register}</td>
+                    <td>${data[i].ph_min_register}</td>
+                    <td>${data[i].ph_max_register}</td>
+                </tr>
+                `;
+            }
+
+            tbody.innerHTML = html;
+        }
+
+
+
+    </script>
 </body>

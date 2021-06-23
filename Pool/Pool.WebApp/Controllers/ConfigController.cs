@@ -25,34 +25,44 @@ namespace Pool.WebApp.Controllers
                 ViewBag.User = HttpContext.Session.GetString("user");
                 ViewData["user"] = HttpContext.Session.GetString("user");
 
-                string url_pool = cadena.url_pool + "/" + HttpContext.Session.GetString("pool");
-
-                using (var http = new HttpClient())
+                if (HttpContext.Session.GetString("pool") == null)
                 {
-                    var res_pool = await http.GetStringAsync(url_pool);
-                    List <PoolModel> pm = JsonConvert.DeserializeObject<List<PoolModel>>(res_pool);
+                    ViewBag.ExistsData = false;
+                }
+                else
+                {
 
-                    ViewBag.Temp_min = pm[0].Temp_min.ToString();
-                    ViewBag.Temp_max = pm[0].Temp_max.ToString();
+                    string url_pool = cadena.url_pool + "/" + HttpContext.Session.GetString("pool");
 
-                    ViewBag.Ph_min = pm[0].Ph_min.ToString();
-                    ViewBag.Ph_max = pm[0].Ph_max.ToString();
-
-                    ViewBag.PoolName = (pm[0].Name_Pool == null) ? "" : pm[0].Name_Pool.ToString();
-                    ViewBag.Location = (pm[0].Location == null) ? "" : pm[0].Location.ToString();
-
-
-                    switch (pm[0].Grados.ToString())
+                    using (var http = new HttpClient())
                     {
-                        case "c":
-                            ViewBag.Grados = "°C";
-                            break;
-                        case "f":
-                            ViewBag.Grados = "°F";
-                            break;
-                        case "k":
-                            ViewBag.Grados = "°K";
-                            break;
+
+                        var res_pool = await http.GetStringAsync(url_pool);
+                        PoolModel pm = JsonConvert.DeserializeObject<PoolModel>(res_pool);
+
+                        ViewBag.ExistsData = true;
+                        ViewBag.Temp_min = pm.Temp_min.ToString();
+                        ViewBag.Temp_max = pm.Temp_max.ToString();
+
+                        ViewBag.Ph_min = pm.Ph_min.ToString();
+                        ViewBag.Ph_max = pm.Ph_max.ToString();
+
+                        ViewBag.PoolName = (pm.Name_Pool == null) ? "" : pm.Name_Pool.ToString();
+                        ViewBag.Location = (pm.Location == null) ? "" : pm.Location.ToString();
+
+
+                        switch (pm.Grados.ToString())
+                        {
+                            case "c":
+                                ViewBag.Grados = "°C";
+                                break;
+                            case "f":
+                                ViewBag.Grados = "°F";
+                                break;
+                            case "k":
+                                ViewBag.Grados = "°K";
+                                break;
+                        }
                     }
 
                 }

@@ -10,17 +10,17 @@ namespace Pool.Core.Models
         public string Id { get; set; }
         
         [BsonElement("fecha")]
-        public decimal Fecha { get; set; }
+        public string Fecha { get; set; }
 
-        [BsonElement("Temp_min")]
-        public decimal Temp_min { get; set; }
+        [BsonElement("Temp_min_register")]
+        public decimal Temp_min_register { get; set; }
 
-        [BsonElement("temp_max")]
-        public decimal Temp_max { get; set; }
-        [BsonElement("Ph_min")]
-        public decimal Ph_min { get; set; }
-        [BsonElement("ph_max")]
-        public decimal Ph_max { get; set; }
+        [BsonElement("temp_max_register")]
+        public decimal Temp_max_register { get; set; }
+        [BsonElement("Ph_min_register")]
+        public decimal Ph_min_register { get; set; }
+        [BsonElement("ph_max_register")]
+        public decimal Ph_max_register { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
         public string IdUser { get; set; }

@@ -41,31 +41,43 @@ namespace Pool.WebApp.Controllers
 
                 string id = HttpContext.Session.GetString("user");
                 string url_user = cadena.url_user + "/" + id;
-                string url_pool = cadena.url_pool+ "/user/" + id;
+                string url_pool = cadena.url_pool+ "/user/" + id; //devuelve un array
 
                 using (var http  = new HttpClient())
                 {
                     var res = await http.GetStringAsync(url_user);
                     User user = JsonConvert.DeserializeObject<User>(res);
+
                     var res_pool = await http.GetStringAsync(url_pool);
-                    PoolModel pm = JsonConvert.DeserializeObject<PoolModel>(res_pool);
+                    List<PoolModel> pm = JsonConvert.DeserializeObject<List<PoolModel>>(res_pool);
 
-                    ViewBag.Name = user.Name.ToString();
-
-                    ViewBag.Temp = pm.Temp_current.ToString();
-                    ViewBag.Ph = pm.Ph_current.ToString();
-                    ViewBag.PoolName = (pm.Name_Pool == null) ? "Sin Nombre para la piscina" : pm.Name_Pool.ToString();
-                    ViewBag.Location = (pm.Location == null) ? "Sin Locación para la piscina" : pm.Location.ToString();
-                    HttpContext.Session.SetString("pool", pm.Id.ToString());
-
-                    switch (pm.Grados.ToString())
+                    if(pm.Count != 0)
                     {
-                        case "c": ViewBag.Grados = "°C";
-                            break;
-                        case "f": ViewBag.Grados = "°F";
-                            break;
-                        case "k": ViewBag.Grados = "°K";
-                            break;
+                        ViewBag.ExistsData = true;
+                        ViewBag.Name = user.Name.ToString();
+
+                        ViewBag.Temp = pm[0].Temp_current.ToString();
+                        ViewBag.Ph = pm[0].Ph_current.ToString();
+                        ViewBag.PoolName = (pm[0].Name_Pool == null) ? "Sin Nombre para la piscina" : pm[0].Name_Pool.ToString();
+                        ViewBag.Location = (pm[0].Location == null) ? "Sin Locación para la piscina" : pm[0].Location.ToString();
+                        HttpContext.Session.SetString("pool", pm[0].Id.ToString());
+
+                        switch (pm[0].Grados.ToString())
+                        {
+                            case "c":
+                                ViewBag.Grados = "°C";
+                                break;
+                            case "f":
+                                ViewBag.Grados = "°F";
+                                break;
+                            case "k":
+                                ViewBag.Grados = "°K";
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.ExistsData = false;
                     }
                 }
 
@@ -77,6 +89,18 @@ namespace Pool.WebApp.Controllers
           
         }
 
+        public async Task<ActionResult> Eliminar()
+        {
+            var client = new HttpClient();
+            string url_pool = cadena.url_pool + "/" + HttpContext.Session.GetString("pool");
+            /*HttpContent content = new StringContent(url_pool, System.Text.Encoding.UTF8, "application/json");*/
+
+            var response = await client.DeleteAsync(url_pool);
+            HttpContext.Session.Remove("pool");
+            return RedirectToAction("Index", "Home");
+
+
+        }
 
         public ActionResult Salir()
         {

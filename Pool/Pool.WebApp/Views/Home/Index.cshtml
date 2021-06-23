@@ -40,49 +40,70 @@
                 <p class="alert alert-success text-center fw-bold"> Datos actualizados </p>
             }
         }
-        <div class="data_pool">
-            <h2 class="title_pool">  @ViewBag.PoolName</h2>
-            <span class="dir_pool">
-                @ViewBag.Location
-            </span>
-        </div>
 
-        <div class="grid_info">
-            <div class="temp box">
-                <div class="titulo">
-                    <p>Temperatura</p>
-                </div>
-                <div class="info">
-                    <div class="dato">
-                        <span>@ViewBag.Temp</span>
-                        <span>@ViewBag.Grados</span>
-                    </div>
-
-                    <div class="img">
-                        <img src="~/img/caliente.png" alt="" />
+        @{
+            if (!ViewBag.ExistsData)
+            {
+                <div class="container">
+                    <div class="row">
+                        <div class="col-7 mx-auto mt-5 text-white">
+                            <p class="display-2 fw-bold">No hay una piscina registrada</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="ph box">
-                <div class="titulo">
-                    <p>pH</p>
+            }
+            else
+            {
+                <div class="data_pool">
+                    <h2 class="title_pool">  @ViewBag.PoolName</h2>
+                    <span class="dir_pool">
+                        @ViewBag.Location
+                    </span>
                 </div>
-                <div class="info">
-                    <div class="dato">
-                        <span>@ViewBag.Ph</span>
+
+                <div class="grid_info">
+                    <div class="temp box">
+                        <div class="titulo">
+                            <p>Temperatura</p>
+                        </div>
+                        <div class="info">
+                            <div class="dato">
+                                <span>@ViewBag.Temp</span>
+                                <span>@ViewBag.Grados</span>
+                            </div>
+
+                            <div class="img">
+                                <img src="~/img/caliente.png" alt="" />
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="img">
-                        <img src="~/img/prueba.png" alt="" />
+                    <div class="ph box">
+                        <div class="titulo">
+                            <p>pH</p>
+                        </div>
+                        <div class="info">
+                            <div class="dato">
+                                <span>@ViewBag.Ph</span>
+                            </div>
+
+                            <div class="img">
+                                <img src="~/img/prueba.png" alt="" />
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <button class="btn_refres mb-4">
-            @Html.ActionLink("Actualizar datos", "Index", "Home", "", new { @class = "text-dark mx-2 text-decoration-none" }) <i class="fas fa-sync-alt"></i>
-        </button>
+                <button class="btn_refres mb-4">
+                    @Html.ActionLink("Actualizar datos", "Index", "Home", "", new { @class = "text-dark mx-2 text-decoration-none" }) <i class="fas fa-sync-alt"></i>
+                </button>
+                <button class="btn_refres bg-danger mb-4">
+                    @Html.ActionLink("Eliminar piscina", "Eliminar", "Home", "", new { @class = "text-white mx-2 text-decoration-none" }) <i class="fas fa-sync-alt"></i>
+                </button>
+            }
+        }
+
+
     </div>
 
     <div class="area">
