@@ -84,7 +84,7 @@
                         </div>
                         <div class="info">
                             <div class="dato">
-                                <span>@ViewBag.Ph</span>
+                                <span id="ph_campo">@ViewBag.PhData</span>
                             </div>
 
                             <div class="img">
@@ -94,8 +94,8 @@
                     </div>
                 </div>
 
-                <button class="btn_refres mb-4">
-                    @Html.ActionLink("Actualizar datos", "Index", "Home", "", new { @class = "text-dark mx-2 text-decoration-none" }) <i class="fas fa-sync-alt"></i>
+                <button class="btn_refres mb-4" id="btn_refres_origi">
+                    Actualizar <i class="fas fa-sync-alt"></i>
                 </button>
                 <button class="btn_refres bg-danger mb-4">
                     @Html.ActionLink("Eliminar piscina", "Eliminar", "Home", "", new { @class = "text-white mx-2 text-decoration-none" }) <i class="fas fa-sync-alt"></i>
@@ -123,11 +123,8 @@
     <script src="https://kit.fontawesome.com/5fa83d646f.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
     <script>
-        const data = '@ViewData["user"]';
-        sessionStorage.setItem("user", data);
 
         const alerta = document.querySelector(".alert");
-
         if (alerta) {
 
             setTimeout(() => {
@@ -137,24 +134,89 @@
             }, 2000)
         }
 
-       @* setInterval(() => {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
 
-            Toast.fire({
-                icon: 'warning',
-                title: 'Atención con tu piscina'
-            })
-        }, 3500)*@
+@*===================================================================*@
+
+        const data = '@ViewData["user"]';
+        sessionStorage.setItem("user", data);
+        const ph = '@ViewBag.PhData';
+
+        const ph_campo = document.getElementById("ph_campo");
+        const btn_refresh = document.getElementById("btn_refres_origi");
+
+        btn_refresh.addEventListener("click", async () => {
+            const url = '@ViewBag.UrlPool';
+            const res = await fetch(url);
+            const data = await res.json();
+            actualizardata(data, true);
+
+        })
+
+        document.addEventListener("DOMContentLoaded", async() => {
+            const url = '@ViewBag.UrlPool';
+            const res = await fetch(url);
+            const data = await res.json();
+            comprobar(data)
+            actualizardata(data);
+        })
+
+        const comprobar = (data) => {
+            const ph_C = Number(ph_campo.textContent);
+            if (ph_C > data.ph_max || ph_C < data.ph_min) {
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 10000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'warning',
+                    title: 'Atención con tu piscina'
+                })
+            }
+        }
+
+
+
+        const actualizardata = async(data, isBtn=false) => {
+            const newData = {
+                id: data.id,
+                name_Pool: data.name_Pool,
+                location: data.location,
+                temp_min: data.temp_min,
+                temp_max: data.temp_max,
+                temp_current: data.temp_current,
+                ph_min: data.ph_min,
+                ph_max: data.ph_max,
+                ph_current: ph,
+                grados: data.grados,
+                idUser: data.idUser
+            }
+
+            const res = await fetch("https://localhost:5001/Pool", {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newData)
+            });
+
+            const res_poolData = await res.json();
+            console.log(res_poolData);
+            ph_campo.textContent = res_poolData.ph_current;
+            if (isBtn) {
+                    window.location.reload();
+
+            }
+        }
+
 
     </script>
 </body>

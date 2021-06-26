@@ -7,30 +7,30 @@ Content-Type: application/json
     "temp_min":18.5,
     "temp_max":40.5,
     "temp_current":20,
-    "ph_min":3,
-    "ph_max":10,
+    "ph_min":2,
+    "ph_max":11,
     "ph_current":7,
     "grados": "f",
     "idUser":"60d378a5b55bd4028994fb27"
 }
 ###
-GET https://localhost:5001/Pool/60d0af52924a9f2376b2396d
+GET https://localhost:5001/Pool/60d68ff4cb6b8ca45edab115
 ###
-GET https://localhost:5001/Pool/user/60d378a5b55bd4028994fb27
+GET https://localhost:5001/Pool/user/60c3978a0c1d417146b5572a
 ###
 PUT https://localhost:5001/Pool
 Content-Type: application/json
 
 {
-    "id": "60d0af52924a9f2376b2396d",
+    "id": "60d68ff4cb6b8ca45edab115",
     "name_Pool": "Piscina de los super malos",
     "location":"China, Monterrey",
     "temp_min":18.5,
     "temp_max":40.5,
     "temp_current":20,
-    "ph_min":3,
+    "ph_min":4,
     "ph_max":10,
-    "ph_current":7,
+    "ph_current":0,
     "grados": "f",
     "idUser":"60c3978a0c1d417146b5572a"
 }

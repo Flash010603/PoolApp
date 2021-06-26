@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Security.Cryptography;
 using System.Text;
 using MongoDB.Driver;
@@ -74,6 +75,7 @@ namespace Pool.Infraestructure.Data
 
         public List<Poolplace> TraerPoolIdUsuario(string id)
         {
+            
             return _poolplace.Find(u => u.IdUser == id).ToList();
         }
 
@@ -94,6 +96,8 @@ namespace Pool.Infraestructure.Data
             _poolplace.DeleteOne(u => u.Id == id);
         }
 
+       
+
         // ===================== Data table =============================
         public List<DataTable> TraerDataTable(string id)
         {
@@ -102,16 +106,19 @@ namespace Pool.Infraestructure.Data
 
         public DataTable CreateDataTable(DataTable dt)
         {
-            DataTable data = new DataTable();
             
+
+            DataTable data = new DataTable();
+
             data.Fecha = dt.Fecha;
             data.Temp_max_register = dt.Temp_max_register;
             data.Temp_min_register = dt.Temp_min_register;
-            data.Ph_max_register = dt.Ph_max_register;            
-            data.Ph_min_register = dt.Ph_min_register;            
+            data.Ph_max_register = dt.Ph_max_register;
+            data.Ph_min_register = dt.Ph_min_register;
             data.IdUser = dt.IdUser;
 
             _datatable.InsertOne(data);
+
             return data;
         }
     }

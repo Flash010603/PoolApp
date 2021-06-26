@@ -43,3 +43,11 @@ C:\Users\frank\Desktop\web\Pool\Pool.WebAPI\bin\Debug\net5.0\Pool.Core.dll
 C:\Users\frank\Desktop\web\Pool\Pool.WebAPI\bin\Debug\net5.0\Pool.Infraestructure.dll
 C:\Users\frank\Desktop\web\Pool\Pool.WebAPI\bin\Debug\net5.0\Pool.Infraestructure.pdb
 C:\Users\frank\Desktop\web\Pool\Pool.WebAPI\bin\Debug\net5.0\Pool.Core.pdb
+C:\Users\frank\Desktop\web\Pool\Pool.WebAPI\bin\Debug\net5.0\System.IO.Ports.dll
+C:\Users\frank\Desktop\web\Pool\Pool.WebAPI\bin\Debug\net5.0\runtimes\linux-arm\native\libSystem.IO.Ports.Native.so
+C:\Users\frank\Desktop\web\Pool\Pool.WebAPI\bin\Debug\net5.0\runtimes\linux-arm64\native\libSystem.IO.Ports.Native.so
+C:\Users\frank\Desktop\web\Pool\Pool.WebAPI\bin\Debug\net5.0\runtimes\linux-x64\native\libSystem.IO.Ports.Native.so
+C:\Users\frank\Desktop\web\Pool\Pool.WebAPI\bin\Debug\net5.0\runtimes\osx-x64\native\libSystem.IO.Ports.Native.dylib
+C:\Users\frank\Desktop\web\Pool\Pool.WebAPI\bin\Debug\net5.0\runtimes\linux\lib\netstandard2.0\System.IO.Ports.dll
+C:\Users\frank\Desktop\web\Pool\Pool.WebAPI\bin\Debug\net5.0\runtimes\osx\lib\netstandard2.0\System.IO.Ports.dll
+C:\Users\frank\Desktop\web\Pool\Pool.WebAPI\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.IO.Ports.dll

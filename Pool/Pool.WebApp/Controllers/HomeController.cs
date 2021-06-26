@@ -6,25 +6,24 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using System.IO;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Pool.WebApp.Models;
+using System.IO.Ports;
 
 namespace Pool.WebApp.Controllers
 {
+    
     public class HomeController : Controller
     {
         UrlPeticion cadena = new UrlPeticion();
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        SerialPort serialPort = new SerialPort();
 
         public async Task<IActionResult> Index()
         {
+            
 
             if (HttpContext.Session.GetString("user") == null)
             {
@@ -33,7 +32,33 @@ namespace Pool.WebApp.Controllers
             }
             else
             {
+                // Asignamos las propiedades
+                serialPort.PortName = "COM6";
+                serialPort.BaudRate = 9600;
+                serialPort.DataBits = 8;
+                serialPort.Parity = Parity.None;
+                serialPort.StopBits = StopBits.One;
+                serialPort.Handshake = Handshake.None;
+                // Creamos el evento
+                /*  serialPort.DataReceived += new SerialDataReceivedEventHandler(SerialPort_DataReceived);*/
 
+                // Controlamos que el puerto indicado esté operativo
+                try
+                {
+                    // Abrimos el puerto serie
+                    serialPort.Open();
+                   string data = serialPort.ReadLine();
+                   string ph = data.Substring(0, data.Length - 2);
+                   
+                    ViewBag.PhData = ph;
+
+                    serialPort.Close();
+                }
+                catch
+                {
+                    
+                }
+                
                 ViewBag.Error= HttpContext.Session.GetString("error");
 
                 ViewBag.User = HttpContext.Session.GetString("user");
@@ -42,6 +67,7 @@ namespace Pool.WebApp.Controllers
                 string id = HttpContext.Session.GetString("user");
                 string url_user = cadena.url_user + "/" + id;
                 string url_pool = cadena.url_pool+ "/user/" + id; //devuelve un array
+                
 
                 using (var http  = new HttpClient())
                 {
@@ -56,11 +82,16 @@ namespace Pool.WebApp.Controllers
                         ViewBag.ExistsData = true;
                         ViewBag.Name = user.Name.ToString();
 
+                        /*ViewBag.PhData = pm[0].Ph_current;*/
+
                         ViewBag.Temp = pm[0].Temp_current.ToString();
                         ViewBag.Ph = pm[0].Ph_current.ToString();
                         ViewBag.PoolName = (pm[0].Name_Pool == null) ? "Sin Nombre para la piscina" : pm[0].Name_Pool.ToString();
                         ViewBag.Location = (pm[0].Location == null) ? "Sin Locación para la piscina" : pm[0].Location.ToString();
                         HttpContext.Session.SetString("pool", pm[0].Id.ToString());
+
+                        ViewBag.UrlPool = cadena.url_pool + "/" + pm[0].Id.ToString();
+
 
                         switch (pm[0].Grados.ToString())
                         {
@@ -88,6 +119,8 @@ namespace Pool.WebApp.Controllers
 
           
         }
+
+        
 
         public async Task<ActionResult> Eliminar()
         {
