@@ -19,8 +19,6 @@ namespace Pool.WebApp.Controllers
     {
         UrlPeticion cadena = new UrlPeticion();
 
-        SerialPort serialPort = new SerialPort();
-
         public async Task<IActionResult> Index()
         {
             
@@ -32,34 +30,13 @@ namespace Pool.WebApp.Controllers
             }
             else
             {
-                // Asignamos las propiedades
-                serialPort.PortName = "COM6";
-                serialPort.BaudRate = 9600;
-                serialPort.DataBits = 8;
-                serialPort.Parity = Parity.None;
-                serialPort.StopBits = StopBits.One;
-                serialPort.Handshake = Handshake.None;
-                // Creamos el evento
-                /*  serialPort.DataReceived += new SerialDataReceivedEventHandler(SerialPort_DataReceived);*/
 
-                // Controlamos que el puerto indicado esté operativo
-                try
-                {
-                    // Abrimos el puerto serie
-                    serialPort.Open();
-                   string data = serialPort.ReadLine();
-                   string ph = data.Substring(0, data.Length - 2);
-                   
-                    ViewBag.PhData = ph;
 
-                    serialPort.Close();
-                }
-                catch
+                if (HttpContext.Session.GetString("error") != null)
                 {
-                    
+                    ViewBag.Error = HttpContext.Session.GetString("error");
+                    HttpContext.Session.Remove("error");
                 }
-                
-                ViewBag.Error= HttpContext.Session.GetString("error");
 
                 ViewBag.User = HttpContext.Session.GetString("user");
                 ViewData["user"] = HttpContext.Session.GetString("user");
@@ -82,10 +59,10 @@ namespace Pool.WebApp.Controllers
                         ViewBag.ExistsData = true;
                         ViewBag.Name = user.Name.ToString();
 
-                        /*ViewBag.PhData = pm[0].Ph_current;*/
 
                         ViewBag.Temp = pm[0].Temp_current.ToString();
                         ViewBag.Ph = pm[0].Ph_current.ToString();
+                        
                         ViewBag.PoolName = (pm[0].Name_Pool == null) ? "Sin Nombre para la piscina" : pm[0].Name_Pool.ToString();
                         ViewBag.Location = (pm[0].Location == null) ? "Sin Locación para la piscina" : pm[0].Location.ToString();
                         HttpContext.Session.SetString("pool", pm[0].Id.ToString());

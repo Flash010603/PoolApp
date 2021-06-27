@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Security.Cryptography;
@@ -13,6 +14,9 @@ namespace Pool.Infraestructure.Data
         private IMongoCollection<Poolplace> _poolplace;
         private IMongoCollection<DataTable> _datatable;
 
+        SerialPort sp = new SerialPort();
+        
+
         public PoolServices(IPoolSettings settings)
         {
             var client = new MongoClient(settings.Server);
@@ -20,6 +24,8 @@ namespace Pool.Infraestructure.Data
             _user = db.GetCollection<User>("User");
             _poolplace = db.GetCollection<Poolplace>("PoolSwimm");
             _datatable = db.GetCollection<DataTable>("DataTable");
+
+            
         }
 
         public List<User> TraerUsuarios()
@@ -87,6 +93,28 @@ namespace Pool.Infraestructure.Data
 
         public Poolplace UpdatePool(Poolplace pool)
         {
+            sp.PortName = "COM6";
+            sp.BaudRate = 9600;
+            sp.DataBits = 8;
+            sp.Parity = Parity.None;
+            sp.StopBits = StopBits.One;
+            sp.Handshake = Handshake.None;
+            sp.Open();
+            string data_ph = sp.ReadLine();
+            string data_temp = sp.ReadLine();
+
+            string ph = data_ph.Substring(0, data_ph.Length - 2);
+            string temp = data_temp.Substring(0, data_temp.Length - 2);
+            
+            decimal ph_final = Convert.ToDecimal(ph) / 10;
+            decimal temp_final = Convert.ToDecimal(temp) / 10;
+
+            pool.Ph_current = ph_final;
+            pool.Temp_current = temp_final;
+
+            sp.Close();
+
+
             _poolplace.ReplaceOne(u => u.Id == pool.Id, pool);
             return pool;
         }

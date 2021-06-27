@@ -30,9 +30,11 @@ Content-Type: application/json
     "temp_current":20,
     "ph_min":4,
     "ph_max":10,
-    "ph_current":0,
+    "ph_current":1.1,
     "grados": "f",
     "idUser":"60c3978a0c1d417146b5572a"
 }
 ###
 DELETE  https://localhost:5001/Pool/60d0a9b7ba320d68ba2a7dd7
+
+

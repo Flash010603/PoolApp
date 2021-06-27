@@ -34,6 +34,7 @@
             if (ViewBag.Error == "1")
             {
                 <p class="alert alert-danger text-center fw-bold"> Error al actualizar datos</p>
+            
             }
             else if (ViewBag.Error == "0")
             {
@@ -68,7 +69,7 @@
                         </div>
                         <div class="info">
                             <div class="dato">
-                                <span>@ViewBag.Temp</span>
+                                <span id="temp_campo">@ViewBag.Temp</span>
                                 <span>@ViewBag.Grados</span>
                             </div>
 
@@ -84,7 +85,7 @@
                         </div>
                         <div class="info">
                             <div class="dato">
-                                <span id="ph_campo">@ViewBag.PhData</span>
+                                <span id="ph_campo">@ViewBag.Ph</span>
                             </div>
 
                             <div class="img">
@@ -126,66 +127,28 @@
 
         const alerta = document.querySelector(".alert");
         if (alerta) {
-
             setTimeout(() => {
-
                 alerta.remove();
-
             }, 2000)
         }
 
 
-@*===================================================================*@
+        document.querySelector("#btn_refres_origi").addEventListener("click", async() => {
 
-        const data = '@ViewData["user"]';
-        sessionStorage.setItem("user", data);
-        const ph = '@ViewBag.PhData';
-
-        const ph_campo = document.getElementById("ph_campo");
-        const btn_refresh = document.getElementById("btn_refres_origi");
-
-        btn_refresh.addEventListener("click", async () => {
             const url = '@ViewBag.UrlPool';
             const res = await fetch(url);
             const data = await res.json();
-            actualizardata(data, true);
+
+            actualizarData(data);
 
         })
 
         document.addEventListener("DOMContentLoaded", async() => {
-            const url = '@ViewBag.UrlPool';
-            const res = await fetch(url);
-            const data = await res.json();
-            comprobar(data)
-            actualizardata(data);
+
+            comprobarAlerta()
         })
 
-        const comprobar = (data) => {
-            const ph_C = Number(ph_campo.textContent);
-            if (ph_C > data.ph_max || ph_C < data.ph_min) {
-
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 10000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                })
-
-                Toast.fire({
-                    icon: 'warning',
-                    title: 'Atención con tu piscina'
-                })
-            }
-        }
-
-
-
-        const actualizardata = async(data, isBtn=false) => {
+        const actualizarData = async(data) => {
             const newData = {
                 id: data.id,
                 name_Pool: data.name_Pool,
@@ -195,28 +158,67 @@
                 temp_current: data.temp_current,
                 ph_min: data.ph_min,
                 ph_max: data.ph_max,
-                ph_current: ph,
+                ph_current: data.ph_current,
                 grados: data.grados,
-                idUser: data.idUser
+                idUser: data.idUser,
             }
 
-            const res = await fetch("https://localhost:5001/Pool", {
+            const url = 'https://localhost:5001/Pool';
+            const res = await fetch(url, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(newData)
             });
+            const data_nueva = await res.json();
 
-            const res_poolData = await res.json();
-            console.log(res_poolData);
-            ph_campo.textContent = res_poolData.ph_current;
-            if (isBtn) {
-                    window.location.reload();
-
-            }
+            colocarData(data_nueva.ph_current, data_nueva.temp_current);
         }
 
+        const colocarData = (ph, temp) => {
+            const temp_campo = document.getElementById("temp_campo");
+            const ph_campo = document.getElementById("ph_campo");
+
+            temp_campo.textContent = temp;
+            ph_campo.textContent = ph;
+
+            comprobarAlerta();
+        }
+
+        const comprobarAlerta = async() => {
+
+            const url = '@ViewBag.UrlPool';
+            const res = await fetch(url);
+            const data = await res.json();
+
+            const temp_campo = document.getElementById("temp_campo").textContent;
+            const ph_campo = document.getElementById("ph_campo").textContent;
+
+
+
+            let text = "";
+            let error = false;
+            if (Number(temp_campo) > data.temp_max || Number(temp_campo )< data.temp_min) {
+                text += "¡Cuida la temperatura!";
+                error = true;
+            } else if (Number(ph_campo )> data.ph_max || Number(ph_campo) < data.ph_min) {
+                text += " ¡Cuida el pH!";
+                error = true
+            }
+
+            (error) && alertaPool(text)
+
+        }
+
+
+        const alertaPool = (text) => {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Alerta en tu piscina',
+                text,
+            })
+        }
 
     </script>
 </body>
