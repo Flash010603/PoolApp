@@ -15,7 +15,7 @@ namespace Pool.WebApp.Controllers
     public class LoginController : Controller
     {
         UrlPeticion cadena = new UrlPeticion();
-
+       
 
         /*public IActionResult Index()
         {
@@ -25,13 +25,17 @@ namespace Pool.WebApp.Controllers
 
         public async Task<ActionResult> Index(LoginModel lm)
         {
+            int pet = (HttpContext.Session.GetString("contador") == null ) ? 0 :Convert.ToInt32(HttpContext.Session.GetString("contador"));
+
+            pet = pet + 1;
+            HttpContext.Session.SetString("contador", pet.ToString());
+
             User data_res = null;
             string url = cadena.url_user + "/" + lm.Username + "&" + lm.Password;
             bool error = false;
             try
             {
-                if (ModelState.IsValid)
-                {
+                
                     var client = new HttpClient();
                     LoginModel loginmodel = new LoginModel();
                     loginmodel.Password = lm.Username;
@@ -50,7 +54,9 @@ namespace Pool.WebApp.Controllers
 
                         if(data_res == null)
                         {
-                            ViewData["error"] = "Error en el usuario y contraseña";
+
+                            ViewData["error"] = "error login";
+                            
                             error = true;
                         }
                         else
@@ -63,9 +69,31 @@ namespace Pool.WebApp.Controllers
                             TempData["user"] = data_res.ToString();
                         }
 
-                    }
-                  
                 }
+                else
+                {
+                    if (ModelState.IsValid)
+                    {
+                        ViewData["error"] = "error login";
+
+                        error = true;
+                    }
+                    else
+                    {
+                        if  (pet > 1)
+                            {
+
+                                ViewData["error"] = "campo vacio";
+                            HttpContext.Session.Remove("contador");
+                        }
+                        error = true;
+
+                    }
+                }
+
+                
+                
+                
 
                 if (error)
                 {

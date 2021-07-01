@@ -14,16 +14,22 @@ namespace Pool.WebApp.Controllers
     public class CrearController : Controller
     {
         UrlPeticion cadena = new UrlPeticion();
+
+
         public async Task<IActionResult> Index(NewUser nu)
         {
+            int pet = (HttpContext.Session.GetString("contador_crear") == null) ? 0 : Convert.ToInt32(HttpContext.Session.GetString("contador_crear"));
+
+            pet = pet + 1;
+            HttpContext.Session.SetString("contador_crear", pet.ToString());
+
             User data_res = null;
             string url = cadena.url_user;
             bool error = false;
 
             try
             {
-                if (ModelState.IsValid)
-                {
+              
                     var client = new HttpClient();
                     NewUser newuser = new NewUser();
                     newuser.Password = nu.Username;
@@ -59,7 +65,19 @@ namespace Pool.WebApp.Controllers
 
                     }
 
-                }
+                    else
+                    {
+                    
+                            if (pet > 1)
+                            {
+
+                                ViewData["error"] = "campo vacio";
+                                HttpContext.Session.Remove("contador_crear");
+                            }
+                            error = true;
+
+                    
+                    }
 
                 if (error)
                 {

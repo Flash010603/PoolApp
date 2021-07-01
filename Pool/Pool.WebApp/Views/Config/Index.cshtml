@@ -16,11 +16,11 @@
 <body>
     <nav>
         <div class="logo">
-            <h1>Logo</h1>
+            <div class="logo_insert"></div>
         </div>
 
         <div class="items_menu">
-            <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            <a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
             <a asp-area="" asp-controller="Config" asp-action="Index" class="active">Configuración</a>
             <a asp-area="" asp-controller="Table" asp-action="Index">Registro</a>
         </div>
@@ -74,8 +74,6 @@
                         }
 
                         @Html.DropDownListFor(model => model.Grados, listItems, "-- Select Status --", new { @class = "select" });
-
-
                     </div>
 
                     <label for="" class="subtitle_config">Temperatura</label>
@@ -98,12 +96,12 @@
                     <p class="m-0">Usted selecciono: @ViewBag.Ph_min</p>
                     <div class="input">
                         <div class="icono"><i class="fas fa-tint"></i></div>
-                        @Html.TextBoxFor(d => d.Ph_min, "", new { @class = "inputitem", @type = "number", @placeholder = "pH minimo", @min = "-7", @max = "7" })
+                        @Html.TextBoxFor(d => d.Ph_min, "", new { @class = "inputitem", @type = "number", @placeholder = "pH minimo" })
                     </div>
                     <p class="m-0">Usted selecciono: @ViewBag.Ph_max</p>
                     <div class="input">
                         <div class="icono"><i class="fas fa-tint"></i></div>
-                        @Html.TextBoxFor(d => d.Ph_max, "", new { @class = "inputitem", @type = "number", @placeholder = "pH minimo", @min = "-7", @max = "7" })
+                        @Html.TextBoxFor(d => d.Ph_max, "", new { @class = "inputitem", @type = "number", @placeholder = "pH minimo" })
                     </div>
 
 

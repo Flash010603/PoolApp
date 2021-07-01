@@ -24,16 +24,11 @@ namespace Pool.WebApp.Controllers
                 ViewData["user"] = HttpContext.Session.GetString("user");
 
                 ViewBag.UrlTabla = cadena.url_table+"/"+ HttpContext.Session.GetString("user");
-                /*ViewBag.PoolID = HttpContext.Session.GetString("pool");*/
-
-
+                ViewBag.UrlPool = cadena.url_pool + "/" + HttpContext.Session.GetString("pool");
 
                 return View();
             }
         }
-
-
-
 
 
         public ActionResult Salir()

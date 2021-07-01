@@ -14,11 +14,11 @@
 
     <nav>
         <div class="logo">
-            <h1>Logo</h1>
+            <div class="logo_insert"></div>
         </div>
 
         <div class="items_menu">
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="active">Home</a>
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="active">Inicio</a>
             <a asp-area="" asp-controller="Config" asp-action="Index">Configuración</a>
             <a asp-area="" asp-controller="Table" asp-action="Index">Registro</a>
         </div>
@@ -173,14 +173,29 @@
             });
             const data_nueva = await res.json();
 
-            colocarData(data_nueva.ph_current, data_nueva.temp_current);
+            colocarData(data_nueva.ph_current, data_nueva.temp_current, data_nueva.grados);
         }
 
-        const colocarData = (ph, temp) => {
+        const colocarData = (ph, temp, grados) => {
             const temp_campo = document.getElementById("temp_campo");
             const ph_campo = document.getElementById("ph_campo");
 
-            temp_campo.textContent = temp;
+            let temp_final=0;
+
+            switch (grados) {
+                case "c":
+                    temp_final = Number(temp)
+                    break;
+                case "f":
+                    temp_final = (Number(temp) * 1.8) + 32;
+                    break;
+                case "k":
+                    temp_final = Number(temp) + 273.15;
+                    break;
+            }
+
+
+            temp_campo.textContent = temp_final;
             ph_campo.textContent = ph;
 
             comprobarAlerta();

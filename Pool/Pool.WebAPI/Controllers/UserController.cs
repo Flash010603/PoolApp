@@ -23,6 +23,7 @@ namespace Pool.WebAPI.Controllers
             return _poolServices.TraerUsuarios();
         }
 
+            
         // =====================================================            
 
         [HttpGet("{id}")]

@@ -30,7 +30,9 @@ namespace Pool.WebAPI
         {
             
             services.Configure<PoolSettings>(Configuration.GetSection(nameof(PoolSettings)));
+            
             services.AddSingleton<IPoolSettings>(d => d.GetRequiredService<IOptions<PoolSettings>>().Value);
+
             services.AddSingleton<PoolServices>();
 
             services.AddControllers();

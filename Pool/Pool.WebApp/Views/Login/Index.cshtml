@@ -16,8 +16,9 @@
 </head>
 <body>
 
-
+    
     <div class="grid_login">
+      
         <div class="row">
             <div class="col-12 mx-auto mt-2 error">
 
@@ -27,28 +28,28 @@
         @using (Html.BeginForm("Index", "Login", FormMethod.Post))
         {
             <div class="box login">
-                <h3>Login</h3>
+                <h3>Inicio de sesión</h3>
 
                 <div class="login_form">
 
                     <div class="item_form">
-                        <label class="label" for="">Username</label>
+                        <label class="label" for="">Nombre de usuario:</label>
                         <div class="input">
                             <div class="icono"><i class="fas fa-user"></i></div>
-                            @Html.TextBoxFor(d => d.Username, "", new { @class = "inputitem", @placeholder = "Ingresa tu usuario", @name = "user" })
+                            @Html.TextBoxFor(d => d.Username, "", new { @class = "inputitem user", @placeholder = "Ingresa tu usuario", @name = "user" })
                         </div>
                     </div>
 
                     <div class="item_form">
-                        <label class="label" for="">Contrseña</label>
+                        <label class="label" for="">Contraseña:</label>
                         <div class="input">
                             <div class="icono"><i class="fas fa-lock"></i></div>
-                            @Html.TextBoxFor(d => d.Password, "", new { @class = "inputitem", @type = "password", @placeholder = "Ingresa tu contraseña", @name = "password" })
+                            @Html.TextBoxFor(d => d.Password, "", new { @class = "inputitem pass", @type = "password", @placeholder = "Ingresa tu contraseña", @name = "password" })
                         </div>
                     </div>
 
 
-                    <button class="btn_login btn_rela"><p class="m-0">Ingresar</p> <i class="fas fa-sign-in-alt"></i></button>
+                    <button class="btn_login btn_rela" id="login"><p class="m-0">Ingresar</p> <i class="fas fa-sign-in-alt"></i></button>
                 </div>
 
             </div>
@@ -56,27 +57,36 @@
 
         <div class="row">
             <div class="col-12 mx-auto mt-2">
-                <p class="alert alert-dark text-center fw-bold  m-0">Aun no tienes cuenta  @Html.ActionLink("Crear una cuneta", "Index", "Crear")</p>
+                <p class="alert alert-dark text-center fw-bold  m-0">¿Aún no tienes cuenta?  @Html.ActionLink("Crear una cuneta", "Index", "Crear")</p>
 
             </div>
         </div>
     </div>
 
     <script src="https://kit.fontawesome.com/5fa83d646f.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
     <script>
 
          document.addEventListener("DOMContentLoaded", () => {
              var text = '@ViewData["error"]';
-
-         if (text != "") {
-             document.querySelector(".error").innerHTML = `
-                <p class="alert alert-danger text-center fw-bold  m-0 mb-2">Error en el usuario y/o contraseña</p>
-                `
-         } else {
-             document.querySelector(".error").innerHTML = "";
-
-         }
+             console.log(text);
+             if (text == "error login") {
+                 Swal.fire({
+                     icon: 'error',
+                     title: 'Datos incorrectos',
+                     text: 'Usuario y/o contraseña incorrectos'
+                 })
+             } else if (text == "campo vacio") {
+                 Swal.fire({
+                     icon: 'warning',
+                     title: 'Datos faltantes',
+                     text: 'Todos los datos son obligatorios'
+                 })
+             }
          })
+
+       
+
 
     </script>
 

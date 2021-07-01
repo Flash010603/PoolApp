@@ -4,20 +4,49 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="index.css" />
+    
     <link rel="stylesheet" href="~/css/login.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" />
     <title>Crear cuenta|| Pool</title>
 </head>
 <body>
 
+    <!-- Button trigger modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Creación de la cuenta.</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p> Se necesitan de todos los datos para enlazar su dispositivo sensor con la cuenta que desea crear</p>
+                    <p>
+                        Para poder crear una cuenta, es necesario:
+                        Primeramente, <b>obtener tu dispositivo sensor </b> para que se logre obtener la red de
+                        dicho dispositivo y esa red será la que se ingresara para crear tu cuenta.
+                    </p>
+                    <p>Después, ingresar todos los datos que se solicitan en el formulario, ya que <b>todos son obligatorios</b>.</p>
+                    <p>Puntos importantes para crear una cuenta: <b>La contraseña debe ser minimo de 6 caracteres</b></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 
-   
     <div class="grid_login">
+        <button type="button" class="btn_modal_crear" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <i class="fas fa-question"></i>
+        </button>
 
         @using (Html.BeginForm("Index", "Crear", FormMethod.Post))
         {
             <div class="box create">
-                <h3>Crear usuario</h3>
+                <h3>Crear cuenta</h3>
                 <div class="login_form">
 
                     <div class="item_form">
@@ -30,7 +59,7 @@
                     </div>
 
                     <div class="item_form">
-                        <label class="label" for="">Username</label>
+                        <label class="label" for="">Nombre de usuario</label>
                         <div class="input">
                             <div class="icono"><i class="fas fa-user"></i></div>
 
@@ -55,6 +84,15 @@
                         </div>
                     </div>
 
+                    <div class="item_form">
+                        <label class="label" for="">Red del Sensor:</label>
+                        <div class="input">
+                            <div class="icono"><i class="fas fa-wifi"></i></div>
+
+                            @Html.TextBoxFor(d => d.Email, "", new { @class = "inputitem", @placeholder = "Ejem: 192.168.92.0" })
+                        </div>
+                    </div>
+
                     <button class="btn_login"><p class="m-0">Crear cuenta</p> <i class="fas fa-user-circle"></i></button>
                 </div>
             </div>
@@ -62,6 +100,30 @@
     </div>
 
     <script src="https://kit.fontawesome.com/5fa83d646f.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+    <script>
+
+         document.addEventListener("DOMContentLoaded", () => {
+             var text = '@ViewData["error"]';
+             if (text == "campo vacio") {
+                 Swal.fire({
+                     icon: 'warning',
+                     title: 'Datos faltantes',
+                     text: 'Todos los datos son obligatorios'
+                 })
+             } else if (text == "pass") {
+
+                 Swal.fire({
+                     icon: 'warning',
+                     title: 'Error en la contraseña',
+                     text: 'La contraseña debe ser minimo de 6 caracteres'
+                 })
+             }
+         })
 
 
+
+
+    </script>
 </body>

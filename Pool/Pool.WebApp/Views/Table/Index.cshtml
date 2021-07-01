@@ -15,11 +15,11 @@
 <body>
     <nav>
         <div class="logo">
-            <h1>Logo</h1>
+            <div class="logo_insert"></div>
         </div>
 
         <div class="items_menu">
-            <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            <a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
             <a asp-area="" asp-controller="Config" asp-action="Index" >Configuración</a>
             <a asp-area="" asp-controller="Table" asp-action="Index" class="active">Registro</a>
         </div>
@@ -44,7 +44,7 @@
                 <tr class="border-light">
                     <th scope="col" class="text-warning">Fecha</th>
                     <th scope="col" class="text-warning">Temp min.</th>
-                    <th scope="col" class="text-warning">Temp min.</th>
+                    <th scope="col" class="text-warning">Temp max.</th>
                     <th scope="col" class="text-warning">pH min</th>
                     <th scope="col" class="text-warning">pH max</th>
                 </tr>
@@ -77,16 +77,17 @@
         document.addEventListener("DOMContentLoaded", () => {
 
             rellenarTabla();
-
+            crearRegistro();
+            
         });
 
         const rellenarTabla = async() => {
 
             const url = '@ViewBag.UrlTabla';
-            console.log(url);
+            
             const res = await fetch(url);
             const data = await res.json();
-            console.log(data);
+           
             let html = "";
 
             for (let i = 0; i<=data.length-1;i++) {
@@ -104,7 +105,106 @@
             tbody.innerHTML = html;
         }
 
+        const crearRegistro = () => {
+            const dia = 1000 * 60 * 60 * 24;
 
+            setInterval(async () => {
+                 const url = '@ViewBag.UrlPool';
+            const res = await fetch(url);
+                const data = await res.json();
+
+
+                 await actualizarData(data);
+
+            }, dia)
+        }
+
+        const actualizarData = async (data) => {
+
+            const data_table = {
+                ph: data.ph_current,
+                temp: data.temp_current
+            }
+
+            sessionStorage.setItem("datos_actu", JSON.stringify(data_table));
+
+
+            const newData = {
+                id: data.id,
+                name_Pool: data.name_Pool,
+                location: data.location,
+                temp_min: data.temp_min,
+                temp_max: data.temp_max,
+                temp_current: data.temp_current,
+                ph_min: data.ph_min,
+                ph_max: data.ph_max,
+                ph_current: data.ph_current,
+                grados: data.grados,
+                idUser: data.idUser,
+            }
+
+            const url = 'https://localhost:5001/Pool';
+            const res = await fetch(url, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newData)
+            });
+            const data_nueva = await res.json();
+            console.log(data_nueva);
+            colocarData(data_nueva.ph_current, data_nueva.temp_current, data_nueva.idUser);
+        }
+
+        const colocarData = async(ph_actual, temp_actual, idUser) => {
+            const data = JSON.parse(sessionStorage.getItem("datos_actu"));
+
+            let temp_min_register = 0;
+            let temp_max_register = 0;
+            let ph_min_register = 0;
+            let ph_max_register = 0;
+
+
+            if (data.ph < ph_actual) {
+                ph_max_register = ph_actual;
+                ph_min_register = data.ph;
+            } else {
+                ph_max_register = data.ph;
+                ph_min_register = ph_actual;
+            }
+
+            if (data.temp < temp_actual) {
+                temp_max_register = temp_actual;
+                temp_min_register = data.temp;
+            } else {
+                temp_max_register = data.temp;
+                temp_min_register = temp_actual;
+            }
+
+            const date = new Date();
+            const newDatatabla = {
+                fecha: `${date.getDay()}-${date.getMonth()+1}-${date.getFullYear()}`,
+                temp_min_register,
+                temp_max_register,
+                ph_min_register,
+                ph_max_register,
+                idUser,
+            }
+
+            
+
+            const url = 'https://localhost:5001/Table';
+            const res = await fetch(url, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newDatatabla)
+            });
+            await res.json();
+
+            rellenarTabla();
+        }
 
     </script>
 </body>
